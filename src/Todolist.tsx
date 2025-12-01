@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export const Todolist = () => {
+type TodolistProps = {
+  title: string;
+  tasks?: Array<{ task: string; isDone: boolean; id: number }>;
+};
+
+export const Todolist: React.FC<TodolistProps> = (props) => {
+  const [title] = useState(props.title);
+
   return (
     <div className="todolist">
-      <h3>What to learn</h3>
+      <h3>{title}</h3>
       <div>
         <input />
         <button>+</button>
       </div>
       <ul>
-        <li>
-          <input type="checkbox" checked={true} /> <span>HTML&CSS</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={true} /> <span>JS</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={false} /> <span>React</span>
-        </li>
+        {props.tasks?.map((t) => {
+          return (
+            <li key={t.id}>
+              <input type="checkbox" checked={t.isDone} /> <span>{t.task}</span>
+            </li>
+          );
+        })}
       </ul>
       <div>
         <button>All</button>
