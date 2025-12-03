@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import type { TaskType } from './App';
 
 type TodolistProps = {
   title: string;
-  tasks?: Array<{ task: string; isDone: boolean; id: number }>;
+  tasks?: TaskType[];
 };
 
-export const Todolist: React.FC<TodolistProps> = (props) => {
-  const [title] = useState(props.title);
-
+export const Todolist: React.FC<TodolistProps> = ({ title, tasks }) => {
   return (
     <div className="todolist">
       <h3>{title}</h3>
@@ -16,7 +15,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         <button>+</button>
       </div>
       <ul>
-        {props.tasks?.map((t) => {
+        {tasks?.map((t) => {
           return (
             <li key={t.id}>
               <input type="checkbox" checked={t.isDone} /> <span>{t.task}</span>
