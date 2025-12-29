@@ -3,10 +3,11 @@ import type { TaskType } from './App';
 
 type TodolistProps = {
   title: string;
-  tasks?: TaskType[];
+  tasks: TaskType[];
+  removeTask: (id: number) => void;
 };
 
-export const Todolist: React.FC<TodolistProps> = ({ title, tasks }) => {
+export const Todolist: React.FC<TodolistProps> = ({ title, tasks, removeTask }) => {
   return (
     <div className="todolist">
       <h3>{title}</h3>
@@ -15,13 +16,20 @@ export const Todolist: React.FC<TodolistProps> = ({ title, tasks }) => {
         <button>+</button>
       </div>
       <ul>
-        {tasks?.map((t) => {
-          return (
-            <li key={t.id}>
-              <input type="checkbox" checked={t.isDone} /> <span>{t.task}</span>
-            </li>
-          );
-        })}
+        {tasks?.length ? (
+          tasks?.map((t) => {
+            return (
+              <li key={t.id}>
+                <input type="checkbox" checked={t.isDone} /> <span>{t.task}</span>
+                <button className="closeButton" onClick={() => removeTask(t.id)}>
+                  x
+                </button>
+              </li>
+            );
+          })
+        ) : (
+          <div>No tasks available</div>
+        )}
       </ul>
       <div>
         <button>All</button>
