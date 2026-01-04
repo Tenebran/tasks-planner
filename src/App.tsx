@@ -22,7 +22,7 @@ function App() {
   ]);
   const [filter, setFilter] = useState<FilterType>('all');
 
-  const getFIlteredTasks = () => {
+  const getFilteredTasks = () => {
     switch (filter) {
       case 'active':
         return tasks.filter((t) => !t.isDone);
@@ -33,10 +33,11 @@ function App() {
     }
   };
 
-  const filtereTasks: TaskType[] = getFIlteredTasks();
+  const filtereTasks: TaskType[] = getFilteredTasks();
 
   // const tasks2: TaskType[] = [
   //   { task: 'Milk', isDone: true, id: 4 },
+
   //   { task: 'Bread', isDone: false, id: 5 },
   //   { task: 'Eggs', isDone: false, id: 6 },
   //   { task: 'Coffe', isDone: false, id: 8 },
@@ -50,6 +51,11 @@ function App() {
     setFilter(filter);
   };
 
+  const addTasks = (newTasks: string) => {
+    const createTasks: TaskType = { task: newTasks, isDone: false, id: tasks.length + 1 };
+    setTasks([createTasks, ...tasks]);
+  };
+
   return (
     <div className="App">
       <Todolist
@@ -57,6 +63,7 @@ function App() {
         tasks={filtereTasks}
         removeTask={removeTask}
         changeFilter={changeFilter}
+        addTasks={addTasks}
       />
     </div>
   );

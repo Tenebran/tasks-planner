@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { FilterType, TaskType } from './App';
 
 type TodolistProps = {
@@ -6,15 +6,41 @@ type TodolistProps = {
   tasks: TaskType[];
   removeTask: (id: number) => void;
   changeFilter: (filter: FilterType) => void;
+  addTasks: (newTasks: string) => void;
 };
 
-export const Todolist: React.FC<TodolistProps> = ({ title, tasks, removeTask, changeFilter }) => {
+export const Todolist: React.FC<TodolistProps> = ({
+  title,
+  tasks,
+  removeTask,
+  changeFilter,
+  addTasks,
+}) => {
+  const [value, setValue] = useState<string>('');
+  console.log('VALUE', value);
+
+  const addTasksHandler = () => {
+    if (!value.trim()) return;
+    addTasks(value);
+    setValue('');
+  };
+
+  const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTasksHandler();
+    }
+  };
+
   return (
     <div className="todolist">
       <h3>{title}</h3>
       <div>
-        <input />
-        <button>+</button>
+        <input
+          value={value}
+          onChange={(e) => setValue(e.currentTarget.value)}
+          onKeyDown={onInputKeyDown}
+        />
+        <button onClick={addTasksHandler}>+</button>
       </div>
       <ul>
         {tasks.length ? (
