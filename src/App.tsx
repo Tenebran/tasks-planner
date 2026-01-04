@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './App.scss';
 import { Todolist } from './Todolist';
+import { v4 } from 'uuid';
 
 export type TaskType = {
   task: string;
   isDone: boolean;
-  id: number;
+  id: string;
 };
 
 export type FilterType = 'all' | 'active' | 'completed';
@@ -15,10 +16,10 @@ function App() {
   // const todolistTitle2 = 'What To Buy';
 
   const [tasks, setTasks] = useState<TaskType[]>([
-    { task: 'HTML&CSS', isDone: true, id: 1 },
-    { task: 'JS', isDone: true, id: 2 },
-    { task: 'ReactJS', isDone: false, id: 3 },
-    { task: 'Redux', isDone: false, id: 7 },
+    { task: 'HTML&CSS', isDone: true, id: v4() },
+    { task: 'JS', isDone: true, id: v4() },
+    { task: 'ReactJS', isDone: false, id: v4() },
+    { task: 'Redux', isDone: false, id: v4() },
   ]);
   const [filter, setFilter] = useState<FilterType>('all');
 
@@ -43,7 +44,7 @@ function App() {
   //   { task: 'Coffe', isDone: false, id: 8 },
   // ];
 
-  const removeTask = (id: number) => {
+  const removeTask = (id: string) => {
     setTasks(tasks.filter((t) => t.id !== id));
   };
 
@@ -52,11 +53,11 @@ function App() {
   };
 
   const addTasks = (newTasks: string) => {
-    const createTasks: TaskType = { task: newTasks, isDone: false, id: tasks.length + 1 };
+    const createTasks: TaskType = { task: newTasks, isDone: false, id: v4() };
     setTasks([createTasks, ...tasks]);
   };
 
-  const updateTasksStatus = (id: number, isDone: boolean) => {
+  const updateTasksStatus = (id: string, isDone: boolean) => {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone } : t)));
   };
 

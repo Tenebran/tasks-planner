@@ -4,10 +4,10 @@ import type { FilterType, TaskType } from './App';
 type TodolistProps = {
   title: string;
   tasks: TaskType[];
-  removeTask: (id: number) => void;
+  removeTask: (id: string) => void;
   changeFilter: (filter: FilterType) => void;
   addTasks: (newTasks: string) => void;
-  updateTasksStatus: (id: number, isDone: boolean) => void;
+  updateTasksStatus: (id: string, isDone: boolean) => void;
 };
 
 export const Todolist: React.FC<TodolistProps> = ({
