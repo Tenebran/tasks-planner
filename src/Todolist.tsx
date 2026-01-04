@@ -7,6 +7,7 @@ type TodolistProps = {
   removeTask: (id: number) => void;
   changeFilter: (filter: FilterType) => void;
   addTasks: (newTasks: string) => void;
+  updateTasksStatus: (id: number, isDone: boolean) => void;
 };
 
 export const Todolist: React.FC<TodolistProps> = ({
@@ -15,9 +16,9 @@ export const Todolist: React.FC<TodolistProps> = ({
   removeTask,
   changeFilter,
   addTasks,
+  updateTasksStatus,
 }) => {
   const [value, setValue] = useState<string>('');
-  console.log('VALUE', value);
 
   const addTasksHandler = () => {
     if (!value.trim()) return;
@@ -47,7 +48,12 @@ export const Todolist: React.FC<TodolistProps> = ({
           tasks?.map((t) => {
             return (
               <li key={t.id}>
-                <input type="checkbox" checked={t.isDone} /> <span>{t.task}</span>
+                <input
+                  type="checkbox"
+                  checked={t.isDone}
+                  onChange={(e) => updateTasksStatus(t.id, e.currentTarget.checked)}
+                />
+                <span>{t.task}</span>
                 <button className="closeButton" onClick={() => removeTask(t.id)}>
                   x
                 </button>
