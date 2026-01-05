@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, type ChangeEvent } from 'react';
 import type { FilterType, TaskType } from './App';
 
 type TodolistProps = {
@@ -6,7 +6,7 @@ type TodolistProps = {
   tasks: TaskType[];
   removeTask: (id: string) => void;
   changeFilter: (filter: FilterType) => void;
-  addTasks: (newTasks: string) => void;
+  addTasks: (title: string) => void;
   updateTasksStatus: (id: string, isDone: boolean) => void;
 };
 
@@ -18,12 +18,12 @@ export const Todolist: React.FC<TodolistProps> = ({
   addTasks,
   updateTasksStatus,
 }) => {
-  const [value, setValue] = useState<string>('');
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
 
   const addTasksHandler = () => {
-    if (!value.trim()) return;
-    addTasks(value);
-    setValue('');
+    if (!newTaskTitle.trim()) return;
+    addTasks(newTaskTitle);
+    setNewTaskTitle('');
   };
 
   const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -32,16 +32,18 @@ export const Todolist: React.FC<TodolistProps> = ({
     }
   };
 
+  const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15;
+  const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) =>
+    setNewTaskTitle(e.currentTarget.value);
+
   return (
     <div className="todolist">
       <h3>{title}</h3>
       <div>
-        <input
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          onKeyDown={onInputKeyDown}
-        />
-        <button onClick={addTasksHandler}>+</button>
+        <input value={newTaskTitle} onChange={onChangeSetNewTaskTitle} onKeyDown={onInputKeyDown} />
+        <button onClick={addTasksHandler} disabled={isAddBtnDisabled}>
+          +
+        </button>
       </div>
       <ul>
         {tasks.length ? (
@@ -53,7 +55,7 @@ export const Todolist: React.FC<TodolistProps> = ({
                   checked={t.isDone}
                   onChange={(e) => updateTasksStatus(t.id, e.currentTarget.checked)}
                 />
-                <span>{t.task}</span>
+                <span>{t.title}</span>
                 <button className="closeButton" onClick={() => removeTask(t.id)}>
                   x
                 </button>

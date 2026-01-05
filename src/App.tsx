@@ -4,7 +4,7 @@ import { Todolist } from './Todolist';
 import { v4 } from 'uuid';
 
 export type TaskType = {
-  task: string;
+  title: string;
   isDone: boolean;
   id: string;
 };
@@ -13,13 +13,12 @@ export type FilterType = 'all' | 'active' | 'completed';
 
 function App() {
   const todolistTitle1 = 'What To Learn';
-  // const todolistTitle2 = 'What To Buy';
 
   const [tasks, setTasks] = useState<TaskType[]>([
-    { task: 'HTML&CSS', isDone: true, id: v4() },
-    { task: 'JS', isDone: true, id: v4() },
-    { task: 'ReactJS', isDone: false, id: v4() },
-    { task: 'Redux', isDone: false, id: v4() },
+    { title: 'HTML&CSS', isDone: true, id: v4() },
+    { title: 'JS', isDone: true, id: v4() },
+    { title: 'ReactJS', isDone: false, id: v4() },
+    { title: 'Redux', isDone: false, id: v4() },
   ]);
   const [filter, setFilter] = useState<FilterType>('all');
 
@@ -36,14 +35,6 @@ function App() {
 
   const filtereTasks: TaskType[] = getFilteredTasks();
 
-  // const tasks2: TaskType[] = [
-  //   { task: 'Milk', isDone: true, id: 4 },
-
-  //   { task: 'Bread', isDone: false, id: 5 },
-  //   { task: 'Eggs', isDone: false, id: 6 },
-  //   { task: 'Coffe', isDone: false, id: 8 },
-  // ];
-
   const removeTask = (id: string) => {
     setTasks(tasks.filter((t) => t.id !== id));
   };
@@ -52,9 +43,9 @@ function App() {
     setFilter(filter);
   };
 
-  const addTasks = (newTasks: string) => {
-    const createTasks: TaskType = { task: newTasks, isDone: false, id: v4() };
-    setTasks([createTasks, ...tasks]);
+  const addTasks = (title: string) => {
+    const newTasks: TaskType = { title, isDone: false, id: v4() };
+    setTasks([newTasks, ...tasks]);
   };
 
   const updateTasksStatus = (id: string, isDone: boolean) => {
