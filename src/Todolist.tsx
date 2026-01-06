@@ -5,24 +5,24 @@ type TodolistProps = {
   title: string;
   tasks: TaskType[];
   removeTask: (id: string) => void;
-  changeFilter: (filter: FilterType) => void;
-  addTasks: (title: string) => void;
-  updateTasksStatus: (id: string, isDone: boolean) => void;
+  changeTaskFilter: (filter: FilterType) => void;
+  addTask: (title: string) => void;
+  changeTaskStatus: (id: string) => void;
 };
 
 export const Todolist: React.FC<TodolistProps> = ({
   title,
   tasks,
   removeTask,
-  changeFilter,
-  addTasks,
-  updateTasksStatus,
+  changeTaskFilter,
+  addTask,
+  changeTaskStatus,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
 
   const addTasksHandler = () => {
     if (!newTaskTitle.trim()) return;
-    addTasks(newTaskTitle);
+    addTask(newTaskTitle);
     setNewTaskTitle('');
   };
 
@@ -50,11 +50,7 @@ export const Todolist: React.FC<TodolistProps> = ({
           tasks?.map((t) => {
             return (
               <li key={t.id}>
-                <input
-                  type="checkbox"
-                  checked={t.isDone}
-                  onChange={(e) => updateTasksStatus(t.id, e.currentTarget.checked)}
-                />
+                <input type="checkbox" checked={t.isDone} onChange={() => changeTaskStatus(t.id)} />
                 <span>{t.title}</span>
                 <button className="closeButton" onClick={() => removeTask(t.id)}>
                   x
@@ -67,9 +63,9 @@ export const Todolist: React.FC<TodolistProps> = ({
         )}
       </ul>
       <div>
-        <button onClick={() => changeFilter('all')}>All</button>
-        <button onClick={() => changeFilter('active')}>Active</button>
-        <button onClick={() => changeFilter('completed')}>Completed</button>
+        <button onClick={() => changeTaskFilter('all')}>All</button>
+        <button onClick={() => changeTaskFilter('active')}>Active</button>
+        <button onClick={() => changeTaskFilter('completed')}>Completed</button>
       </div>
     </div>
   );
