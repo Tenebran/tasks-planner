@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import './App.scss';
 import { Todolist } from './Todolist';
 import { v4 } from 'uuid';
@@ -48,11 +48,13 @@ function App() {
     setTasks([newTasks, ...tasks]);
   };
 
-  const changeTaskStatus = (id: string) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone: !t.isDone } : t)));
+  const changeTaskStatus = (id: string, newIsDoneValue: boolean) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone: newIsDoneValue } : t)));
   };
 
-  const changeTaskTitle = () => {};
+  const changeTaskTitle = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, title: e.currentTarget.value } : t)));
+  };
 
   return (
     <div className="App">
@@ -63,6 +65,7 @@ function App() {
         changeTaskFilter={changeTaskFilter}
         addTask={addTask}
         changeTaskStatus={changeTaskStatus}
+        changeTaskTitle={changeTaskTitle}
       />
     </div>
   );
