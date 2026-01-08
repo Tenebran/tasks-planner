@@ -23,9 +23,15 @@ export const Task: React.FC<TaskPropsType> = ({
     <li>
       {!open ? (
         <>
-          <input type="checkbox" checked={isDone} onChange={() => changeTaskStatus(id, !isDone)} />
+          <input
+            type="checkbox"
+            checked={isDone}
+            onChange={(e) => changeTaskStatus(id, e.currentTarget.checked)}
+          />
 
-          <span onDoubleClick={() => setOpen(true)}>{title}</span>
+          <span className={isDone ? 'task_done' : 'task'} onDoubleClick={() => setOpen(true)}>
+            {title}
+          </span>
 
           <button onClick={() => removeTask(id)}>x</button>
         </>

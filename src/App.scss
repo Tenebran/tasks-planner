@@ -37,3 +37,20 @@
   box-shadow: 0 2px 0 #3730a3;
   background-color: rgb(144, 61, 61);
 }
+
+.filter {
+  font-weight: 400;
+
+  &_active {
+    background-color: #3730a3;
+    font-size: 18px;
+  }
+}
+
+.task {
+  font-weight: 800;
+  &_done {
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+}
