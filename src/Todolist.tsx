@@ -24,11 +24,16 @@ export const Todolist: React.FC<TodolistProps> = ({
   filter,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
+  const [inputError, setInputError] = useState<boolean>(false);
 
   const addTasksHandler = () => {
-    if (!newTaskTitle.trim()) return;
-    addTask(newTaskTitle);
-    setNewTaskTitle('');
+    if (!newTaskTitle.trim()) {
+      setInputError(true);
+    } else {
+      setInputError(false);
+      addTask(newTaskTitle);
+      setNewTaskTitle('');
+    }
   };
 
   const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,24 +43,38 @@ export const Todolist: React.FC<TodolistProps> = ({
   };
 
   const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15;
-  const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) =>
+
+  const userMessage =
+    newTaskTitle.length >= 15
+      ? 'Your title is too long'
+      : inputError
+      ? 'Your title is empty'
+      : 'Enter new title';
+
+  const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
+    setInputError(false);
+  };
 
   const filterHandler = (filterButton: FilterType) => {
     return filter === filterButton ? 'filter_active' : '';
   };
 
-  console.log('filter', filterHandler(filter));
-
   return (
     <div className="todolist">
       <h3>{title}</h3>
       <div>
-        <input value={newTaskTitle} onChange={onChangeSetNewTaskTitle} onKeyDown={onInputKeyDown} />
+        <input
+          className={inputError ? 'input_error' : ''}
+          value={newTaskTitle}
+          onChange={onChangeSetNewTaskTitle}
+          onKeyDown={onInputKeyDown}
+        />
         <button onClick={addTasksHandler} disabled={isAddBtnDisabled}>
           +
         </button>
       </div>
+      <span>{userMessage}</span>
       <ul>
         {tasks.length ? (
           tasks?.map((t) => {

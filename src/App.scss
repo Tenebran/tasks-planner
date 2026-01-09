@@ -54,3 +54,9 @@
     text-decoration: line-through;
   }
 }
+
+.input {
+  &_error {
+    border: 1px solid red;
+  }
+}
