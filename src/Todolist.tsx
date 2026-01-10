@@ -55,7 +55,7 @@ export const Todolist: React.FC<TodolistProps> = ({
     setNewTaskTitle(e.currentTarget.value);
     setInputError(false);
   };
-
+  console.log('test');
   const filterHandler = (filterButton: FilterType) => {
     return filter === filterButton ? 'filter_active' : '';
   };
