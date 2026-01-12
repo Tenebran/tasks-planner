@@ -58,16 +58,16 @@ function App() {
   const filtereTasks: TaskType[] = getFilteredTasks();
 
   const removeTask = (taskId: string, todoListId: string) => {
-    setTasks({ ...tasks, todoListId: tasks[todoListId].filter((t) => t.id !== taskId) });
+    setTasks({ ...tasks, [todoListId]: tasks[todoListId].filter((t) => t.id !== taskId) });
   };
 
   const changeTaskFilter = (filter: FilterType) => {
     setFilter(filter);
   };
 
-  const addTask = (title: string) => {
+  const addTask = (title: string, todoListId: string) => {
     const newTasks: TaskType = { title, isDone: false, id: v4() };
-    setTasks([newTasks, ...tasks]);
+    setTasks({ ...tasks, [todoListId]: [newTasks, ...tasks[todoListId]] });
   };
 
   const changeTaskStatus = (id: string, newIsDoneValue: boolean) => {
