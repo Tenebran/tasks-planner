@@ -61,8 +61,8 @@ function App() {
     setTasks({ ...tasks, [todoListId]: tasks[todoListId].filter((t) => t.id !== taskId) });
   };
 
-  const changeTaskFilter = (filter: FilterType) => {
-    setFilter(filter);
+  const changeTaskFilter = (filter: FilterType, todoListId: string) => {
+    setTodoLists(todoLists.map((t) => (t.id === todoListId ? { ...t, filter } : t)));
   };
 
   const addTask = (title: string, todoListId: string) => {
@@ -70,12 +70,22 @@ function App() {
     setTasks({ ...tasks, [todoListId]: [newTasks, ...tasks[todoListId]] });
   };
 
-  const changeTaskStatus = (id: string, newIsDoneValue: boolean) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, isDone: newIsDoneValue } : t)));
+  const changeTaskStatus = (id: string, newIsDoneValue: boolean, todoListId: string) => {
+    setTasks({
+      ...tasks,
+      [todoListId]: tasks[todoListId].map((t) =>
+        t.id === id ? { ...t, isDone: newIsDoneValue } : t
+      ),
+    });
   };
 
-  const changeTaskTitle = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, title: e.currentTarget.value } : t)));
+  const changeTaskTitle = (e: ChangeEvent<HTMLInputElement>, id: string, todoListId: string) => {
+    setTasks({
+      ...tasks,
+      [todoListId]: tasks[todoListId].map((t) =>
+        t.id === id ? { ...t, title: e.currentTarget.value } : t
+      ),
+    });
   };
 
   return (
