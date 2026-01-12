@@ -22,8 +22,6 @@ export type TaskStateType = {
 };
 
 function App() {
-  const todolistTitle1 = 'What To Learn';
-
   const todoListID_1 = v4();
   const todoListID_2 = v4();
 
@@ -46,14 +44,6 @@ function App() {
     ],
   });
 
-  const [tasks, setTasks] = useState<TaskType[]>([
-    { title: 'HTML&CSS', isDone: true, id: v4() },
-    { title: 'JS', isDone: true, id: v4() },
-    { title: 'ReactJS', isDone: false, id: v4() },
-    { title: 'Redux', isDone: false, id: v4() },
-  ]);
-  const [filter, setFilter] = useState<FilterType>('all');
-
   const getFilteredTasks = () => {
     switch (filter) {
       case 'active':
@@ -67,8 +57,8 @@ function App() {
 
   const filtereTasks: TaskType[] = getFilteredTasks();
 
-  const removeTask = (id: string) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+  const removeTask = (taskId: string, todoListId: string) => {
+    setTasks({ ...tasks, todoListId: tasks[todoListId].filter((t) => t.id !== taskId) });
   };
 
   const changeTaskFilter = (filter: FilterType) => {
