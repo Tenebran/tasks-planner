@@ -44,18 +44,26 @@ function App() {
     ],
   });
 
-  const getFilteredTasks = () => {
-    switch (filter) {
-      case 'active':
-        return tasks.filter((t) => !t.isDone);
-      case 'completed':
-        return tasks.filter((t) => t.isDone);
-      default:
-        return tasks;
-    }
+  const getFilteredTasks = (): TaskStateType => {
+    return todoLists.reduce<TaskStateType>((acc, tl) => {
+      const allTasks = tasks[tl.id] ?? [];
+
+      switch (tl.filter) {
+        case 'active':
+          acc[tl.id] = allTasks.filter((t) => !t.isDone);
+          break;
+        case 'completed':
+          acc[tl.id] = allTasks.filter((t) => t.isDone);
+          break;
+        default:
+          acc[tl.id] = allTasks;
+      }
+
+      return acc;
+    }, {});
   };
 
-  const filtereTasks: TaskType[] = getFilteredTasks();
+  const filteredTasks = getFilteredTasks();
 
   const removeTask = (taskId: string, todoListId: string) => {
     setTasks({ ...tasks, [todoListId]: tasks[todoListId].filter((t) => t.id !== taskId) });
@@ -88,18 +96,27 @@ function App() {
     });
   };
 
+  const removeTodoList = (todoListId: string) => {
+    setTodoLists(todoLists.filter((t) => t.id !== todoListId));
+    delete tasks[todoListId];
+  };
+
   return (
     <div className="App">
-      <Todolist
-        title={todolistTitle1}
-        tasks={filtereTasks}
-        removeTask={removeTask}
-        changeTaskFilter={changeTaskFilter}
-        addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
-        changeTaskTitle={changeTaskTitle}
-        filter={filter}
-      />
+      {todoLists.map((t) => (
+        <Todolist
+          key={t.id}
+          title={t.title}
+          tasks={filteredTasks[t.id]}
+          removeTask={removeTask}
+          changeTaskFilter={changeTaskFilter}
+          addTask={addTask}
+          changeTaskStatus={changeTaskStatus}
+          changeTaskTitle={changeTaskTitle}
+          filter={t.filter}
+          todoListId={t.id}
+        />
+      ))}
     </div>
   );
 }
