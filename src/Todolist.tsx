@@ -12,6 +12,7 @@ type TodolistProps = {
   changeTaskTitle: (e: ChangeEvent<HTMLInputElement>, id: string, todoListId: string) => void;
   filter: FilterType;
   todoListId: string;
+  removeTodoList: (todoListId: string) => void;
 };
 
 export const Todolist: React.FC<TodolistProps> = ({
@@ -24,11 +25,10 @@ export const Todolist: React.FC<TodolistProps> = ({
   changeTaskTitle,
   filter,
   todoListId,
+  removeTodoList,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
   const [inputError, setInputError] = useState<boolean>(false);
-
-  console.log('tasks', tasks);
 
   const addTasksHandler = () => {
     if (!newTaskTitle.trim()) {
@@ -59,14 +59,18 @@ export const Todolist: React.FC<TodolistProps> = ({
     setNewTaskTitle(e.currentTarget.value);
     setInputError(false);
   };
-  console.log('test');
   const filterHandler = (filterButton: FilterType) => {
     return filter === filterButton ? 'filter_active' : '';
   };
 
   return (
     <div className="todolist">
-      <h3>{title}</h3>
+      <div className="todolist-header">
+        <h3>{title}</h3>
+        <button className="todolist-header_button" onClick={() => removeTodoList(todoListId)}>
+          X
+        </button>
+      </div>
       <div>
         <input
           className={inputError ? 'input_error' : ''}

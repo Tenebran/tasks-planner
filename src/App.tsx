@@ -98,7 +98,9 @@ function App() {
 
   const removeTodoList = (todoListId: string) => {
     setTodoLists(todoLists.filter((t) => t.id !== todoListId));
-    delete tasks[todoListId];
+    const newTasks = { ...tasks };
+    delete newTasks[todoListId];
+    setTasks(newTasks);
   };
 
   return (
@@ -115,6 +117,7 @@ function App() {
           changeTaskTitle={changeTaskTitle}
           filter={t.filter}
           todoListId={t.id}
+          removeTodoList={removeTodoList}
         />
       ))}
     </div>
