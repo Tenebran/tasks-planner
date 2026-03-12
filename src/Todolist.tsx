@@ -1,7 +1,7 @@
 import React, { useState, type ChangeEvent } from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
-import { Button } from '@mui/material';
+import { Button, ButtonGroup } from '@mui/material';
 
 type TodolistProps = {
   title: string;
@@ -102,27 +102,25 @@ export const Todolist: React.FC<TodolistProps> = ({
         )}
       </ul>
       <div>
-        <Button
-          variant="contained"
-          color={filter === 'all' ? 'secondary' : 'primary'}
-          size={'small'}
-          onClick={() => changeTaskFilter('all', todoListId)}>
-          All
-        </Button>
-        <Button
-          variant="contained"
-          color={filter === 'active' ? 'secondary' : 'primary'}
-          size={'small'}
-          onClick={() => changeTaskFilter('active', todoListId)}>
-          Active
-        </Button>
-        <Button
-          variant="contained"
-          color={filter === 'completed' ? 'secondary' : 'primary'}
-          size={'small'}
-          onClick={() => changeTaskFilter('completed', todoListId)}>
-          Completed
-        </Button>
+        <ButtonGroup variant="contained" size={'small'} disableElevation>
+          <Button
+            color={filter === 'all' ? 'secondary' : 'primary'}
+            sx={{ mr: '2px' }}
+            onClick={() => changeTaskFilter('all', todoListId)}>
+            All
+          </Button>
+          <Button
+            color={filter === 'active' ? 'secondary' : 'primary'}
+            sx={{ mr: '2px' }}
+            onClick={() => changeTaskFilter('active', todoListId)}>
+            Active
+          </Button>
+          <Button
+            color={filter === 'completed' ? 'secondary' : 'primary'}
+            onClick={() => changeTaskFilter('completed', todoListId)}>
+            Completed
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );
