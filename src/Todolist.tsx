@@ -1,6 +1,7 @@
 import React, { useState, type ChangeEvent } from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
+import { Button } from '@mui/material';
 
 type TodolistProps = {
   title: string;
@@ -52,15 +53,12 @@ export const Todolist: React.FC<TodolistProps> = ({
     newTaskTitle.length >= 15
       ? 'Your title is too long'
       : inputError
-      ? 'Your title is empty'
-      : 'Enter new title';
+        ? 'Your title is empty'
+        : 'Enter new title';
 
   const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
     setInputError(false);
-  };
-  const filterHandler = (filterButton: FilterType) => {
-    return filter === filterButton ? 'filter_active' : '';
   };
 
   return (
@@ -104,21 +102,27 @@ export const Todolist: React.FC<TodolistProps> = ({
         )}
       </ul>
       <div>
-        <button
-          className={filterHandler('all')}
+        <Button
+          variant="contained"
+          color={filter === 'all' ? 'secondary' : 'primary'}
+          size={'small'}
           onClick={() => changeTaskFilter('all', todoListId)}>
           All
-        </button>
-        <button
-          className={filterHandler('active')}
+        </Button>
+        <Button
+          variant="contained"
+          color={filter === 'active' ? 'secondary' : 'primary'}
+          size={'small'}
           onClick={() => changeTaskFilter('active', todoListId)}>
           Active
-        </button>
-        <button
-          className={filterHandler('completed')}
+        </Button>
+        <Button
+          variant="contained"
+          color={filter === 'completed' ? 'secondary' : 'primary'}
+          size={'small'}
           onClick={() => changeTaskFilter('completed', todoListId)}>
           Completed
-        </button>
+        </Button>
       </div>
     </div>
   );
