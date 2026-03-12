@@ -1,7 +1,8 @@
 import React, { useState, type ChangeEvent } from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
-import { Button, ButtonGroup } from '@mui/material';
+import { Button, ButtonGroup, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type TodolistProps = {
   title: string;
@@ -65,9 +66,9 @@ export const Todolist: React.FC<TodolistProps> = ({
     <div className="todolist">
       <div className="todolist-header">
         <h3>{title}</h3>
-        <button className="todolist-header_button" onClick={() => removeTodoList(todoListId)}>
-          X
-        </button>
+        <IconButton aria-label="delete" onClick={() => removeTodoList(todoListId)}>
+          <DeleteIcon />
+        </IconButton>
       </div>
       <div>
         <input

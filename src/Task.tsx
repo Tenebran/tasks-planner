@@ -1,4 +1,6 @@
-import React, { useState, type ChangeEvent } from 'react';
+import { IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type TaskPropsType = {
   changeTaskStatus: (id: string, newIsDoneValue: boolean, todoListId: string) => void;
@@ -34,8 +36,9 @@ export const Task: React.FC<TaskPropsType> = ({
           <span className={isDone ? 'task_done' : 'task'} onDoubleClick={() => setOpen(true)}>
             {title}
           </span>
-
-          <button onClick={() => removeTask(id, todoListId)}>x</button>
+          <IconButton aria-label="delete" onClick={() => removeTask(id, todoListId)}>
+            <DeleteIcon />
+          </IconButton>
         </>
       ) : (
         <input
