@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material';
 import React, { useState } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 
 type TaskPropsType = {
   changeTaskStatus: (id: string, newIsDoneValue: boolean, todoListId: string) => void;
@@ -37,7 +37,7 @@ export const Task: React.FC<TaskPropsType> = ({
             {title}
           </span>
           <IconButton aria-label="delete" onClick={() => removeTask(id, todoListId)}>
-            <DeleteIcon />
+            <CancelPresentationIcon color={'error'} />
           </IconButton>
         </>
       ) : (

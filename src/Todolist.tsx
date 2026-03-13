@@ -1,8 +1,9 @@
-import React, { useState, type ChangeEvent } from 'react';
+import React, { type ChangeEvent } from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
 import { Button, ButtonGroup, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { AddItemForm } from './AddItemForm';
 
 type TodolistProps = {
   title: string;
@@ -29,59 +30,15 @@ export const Todolist: React.FC<TodolistProps> = ({
   todoListId,
   removeTodoList,
 }) => {
-  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
-  const [inputError, setInputError] = useState<boolean>(false);
-
-  const addTasksHandler = () => {
-    if (!newTaskTitle.trim()) {
-      setInputError(true);
-    } else {
-      setInputError(false);
-      addTask(newTaskTitle, todoListId);
-      setNewTaskTitle('');
-    }
-  };
-
-  const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addTasksHandler();
-    }
-  };
-
-  const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15;
-
-  const userMessage =
-    newTaskTitle.length >= 15
-      ? 'Your title is too long'
-      : inputError
-        ? 'Your title is empty'
-        : 'Enter new title';
-
-  const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget.value);
-    setInputError(false);
-  };
-
   return (
     <div className="todolist">
       <div className="todolist-header">
         <h3>{title}</h3>
         <IconButton aria-label="delete" onClick={() => removeTodoList(todoListId)}>
-          <DeleteIcon />
+          <DeleteIcon color={'error'} />
         </IconButton>
       </div>
-      <div>
-        <input
-          className={inputError ? 'input_error' : ''}
-          value={newTaskTitle}
-          onChange={onChangeSetNewTaskTitle}
-          onKeyDown={onInputKeyDown}
-        />
-        <button onClick={addTasksHandler} disabled={isAddBtnDisabled}>
-          +
-        </button>
-      </div>
-      <span>{userMessage}</span>
+      <AddItemForm addTask={addTask} todoListId={todoListId} />
       <ul>
         {tasks.length ? (
           tasks?.map((t) => {
