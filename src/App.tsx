@@ -82,7 +82,7 @@ function App() {
     setTasks({
       ...tasks,
       [todoListId]: tasks[todoListId].map((t) =>
-        t.id === id ? { ...t, isDone: newIsDoneValue } : t
+        t.id === id ? { ...t, isDone: newIsDoneValue } : t,
       ),
     });
   };
@@ -91,7 +91,7 @@ function App() {
     setTasks({
       ...tasks,
       [todoListId]: tasks[todoListId].map((t) =>
-        t.id === id ? { ...t, title: e.currentTarget.value } : t
+        t.id === id ? { ...t, title: e.currentTarget.value } : t,
       ),
     });
   };
@@ -101,6 +101,11 @@ function App() {
     const newTasks = { ...tasks };
     delete newTasks[todoListId];
     setTasks(newTasks);
+  };
+  const addTodolist = (title: string) => {
+    const todolistId = v4();
+    setTodoLists([...todoLists, { id: todolistId, title, filter: 'all' }]);
+    setTasks({ ...tasks, [todolistId]: [] });
   };
 
   return (

@@ -1,4 +1,6 @@
+import { Button } from '@mui/material';
 import React, { useState, type ChangeEvent } from 'react';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 type AddItemForm = {
   addTask: (title: string, todoListId: string) => void;
@@ -48,9 +50,16 @@ export const AddItemForm: React.FC<AddItemForm> = ({ addTask, todoListId }) => {
           onChange={onChangeSetNewTaskTitle}
           onKeyDown={onInputKeyDown}
         />
-        <button onClick={addTasksHandler} disabled={isAddBtnDisabled}>
-          +
-        </button>
+        <Button
+          onClick={addTasksHandler}
+          disabled={isAddBtnDisabled}
+          size={'small'}
+          color={'primary'}
+          variant={'contained'}
+          sx={{ ml: '5px' }}
+          endIcon={<AddBoxIcon />}>
+          Add
+        </Button>
       </div>
       <span>{userMessage}</span>
     </>
