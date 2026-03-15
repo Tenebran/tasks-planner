@@ -1,43 +1,43 @@
 import { Button } from '@mui/material';
 import React, { useState, type ChangeEvent } from 'react';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { v4 } from 'uuid';
 
 type AddItemForm = {
-  addTask: (title: string, todoListId: string) => void;
-  todoListId: string;
+  todoListId?: string;
+  addItem: (title: string, todoListId: string) => void;
 };
 
-export const AddItemForm: React.FC<AddItemForm> = ({ addTask, todoListId }) => {
+export const AddItemForm: React.FC<AddItemForm> = ({ todoListId, addItem }) => {
   const [inputError, setInputError] = useState<boolean>(false);
-  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
-
-  const addTasksHandler = () => {
-    if (!newTaskTitle.trim()) {
-      setInputError(true);
-    } else {
-      setInputError(false);
-      addTask(newTaskTitle, todoListId);
-      setNewTaskTitle('');
-    }
-  };
-
-  const isAddBtnDisabled = !newTaskTitle || newTaskTitle.length >= 15;
+  const [newItemTitle, setNewTaskTitle] = useState<string>('');
 
   const userMessage =
-    newTaskTitle.length >= 15
+    newItemTitle.length >= 15
       ? 'Your title is too long'
       : inputError
         ? 'Your title is empty'
         : 'Enter new title';
+
+  const isAddBtnDisabled = !newItemTitle || newItemTitle.length >= 15;
 
   const onChangeSetNewTaskTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
     setInputError(false);
   };
 
+  const addItemHandler = () => {
+    if (!newItemTitle.trim()) {
+      setInputError(true);
+    } else {
+      setInputError(false);
+      addItem(newItemTitle, todoListId ? todoListId : v4());
+      setNewTaskTitle('');
+    }
+  };
   const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      addTasksHandler();
+      addItemHandler();
     }
   };
 
@@ -46,12 +46,12 @@ export const AddItemForm: React.FC<AddItemForm> = ({ addTask, todoListId }) => {
       <div>
         <input
           className={inputError ? 'input_error' : ''}
-          value={newTaskTitle}
+          value={newItemTitle}
           onChange={onChangeSetNewTaskTitle}
           onKeyDown={onInputKeyDown}
         />
         <Button
-          onClick={addTasksHandler}
+          onClick={addItemHandler}
           disabled={isAddBtnDisabled}
           size={'small'}
           color={'primary'}

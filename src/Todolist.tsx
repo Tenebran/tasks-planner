@@ -38,7 +38,7 @@ export const Todolist: React.FC<TodolistProps> = ({
           <DeleteIcon color={'error'} />
         </IconButton>
       </div>
-      <AddItemForm addTask={addTask} todoListId={todoListId} />
+      <AddItemForm todoListId={todoListId} addItem={addTask} />
       <ul>
         {tasks.length ? (
           tasks?.map((t) => {

@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import './App.scss';
 import { Todolist } from './Todolist';
 import { v4 } from 'uuid';
+import { AddItemForm } from './AddItemForm';
 
 export type TaskType = {
   title: string;
@@ -102,14 +103,14 @@ function App() {
     delete newTasks[todoListId];
     setTasks(newTasks);
   };
-  const addTodolist = (title: string) => {
-    const todolistId = v4();
+  const addTodolist = (title: string, todolistId: string) => {
     setTodoLists([...todoLists, { id: todolistId, title, filter: 'all' }]);
     setTasks({ ...tasks, [todolistId]: [] });
   };
 
   return (
     <div className="App">
+      <AddItemForm addItem={addTodolist} />
       {todoLists.map((t) => (
         <Todolist
           key={t.id}
