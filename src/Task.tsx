@@ -1,6 +1,7 @@
 import { IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import Checkbox from '@mui/material/Checkbox';
 
 type TaskPropsType = {
   changeTaskStatus: (id: string, newIsDoneValue: boolean, todoListId: string) => void;
@@ -27,8 +28,7 @@ export const Task: React.FC<TaskPropsType> = ({
     <li>
       {!open ? (
         <>
-          <input
-            type="checkbox"
+          <Checkbox
             checked={isDone}
             onChange={(e) => changeTaskStatus(id, e.currentTarget.checked, todoListId)}
           />

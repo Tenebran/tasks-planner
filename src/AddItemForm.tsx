@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import React, { useState, type ChangeEvent } from 'react';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { v4 } from 'uuid';
@@ -13,11 +13,7 @@ export const AddItemForm: React.FC<AddItemForm> = ({ todoListId, addItem }) => {
   const [newItemTitle, setNewTaskTitle] = useState<string>('');
 
   const userMessage =
-    newItemTitle.length >= 15
-      ? 'Your title is too long'
-      : inputError
-        ? 'Your title is empty'
-        : 'Enter new title';
+    newItemTitle.length >= 15 ? 'Your title is too long' : inputError ? 'Your title is empty' : '';
 
   const isAddBtnDisabled = !newItemTitle || newItemTitle.length >= 15;
 
@@ -44,24 +40,35 @@ export const AddItemForm: React.FC<AddItemForm> = ({ todoListId, addItem }) => {
   return (
     <>
       <div>
-        <input
+        <TextField
           className={inputError ? 'input_error' : ''}
           value={newItemTitle}
           onChange={onChangeSetNewTaskTitle}
           onKeyDown={onInputKeyDown}
+          variant={'outlined'}
+          size={'small'}
+          label={'Enter new title'}
+          error={newItemTitle.length >= 15 || inputError}
+          helperText={userMessage}
         />
+        {/* <input
+          className={inputError ? 'input_error' : ''}
+          value={newItemTitle}
+          onChange={onChangeSetNewTaskTitle}
+          onKeyDown={onInputKeyDown}
+        /> */}
         <Button
           onClick={addItemHandler}
           disabled={isAddBtnDisabled}
-          size={'small'}
+          size={'medium'}
           color={'primary'}
           variant={'contained'}
           sx={{ ml: '5px' }}
           endIcon={<AddBoxIcon />}>
           Add
         </Button>
+        {/* <span className={'input_message'}>{userMessage}</span> */}
       </div>
-      <span>{userMessage}</span>
     </>
   );
 };
