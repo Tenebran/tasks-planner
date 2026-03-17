@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState } from 'react';
 import './App.scss';
 import { Todolist } from './Todolist';
 import { v4 } from 'uuid';
@@ -88,7 +88,11 @@ function App() {
     });
   };
 
-  const changeTaskTitle = (e: ChangeEvent<HTMLInputElement>, id: string, todoListId: string) => {
+  const changeTaskTitle = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: string,
+    todoListId: string,
+  ) => {
     setTasks({
       ...tasks,
       [todoListId]: tasks[todoListId].map((t) =>

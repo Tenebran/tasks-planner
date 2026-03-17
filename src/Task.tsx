@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import Checkbox from '@mui/material/Checkbox';
@@ -9,7 +9,11 @@ type TaskPropsType = {
   id: string;
   title: string;
   isDone: boolean;
-  changeTaskTitle: (e: React.ChangeEvent<HTMLInputElement>, id: string, todoListId: string) => void;
+  changeTaskTitle: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: string,
+    todoListId: string,
+  ) => void;
   todoListId: string;
 };
 
@@ -41,12 +45,19 @@ export const Task: React.FC<TaskPropsType> = ({
           </IconButton>
         </>
       ) : (
-        <input
+        <TextField
           autoFocus
+          variant={'standard'}
           onBlur={() => setOpen(false)}
           value={title}
           onChange={(e) => changeTaskTitle(e, id, todoListId)}
         />
+        // <input
+        //   autoFocus
+        //   onBlur={() => setOpen(false)}
+        //   value={title}
+        //   onChange={(e) => changeTaskTitle(e, id, todoListId)}
+        // />
       )}
     </li>
   );

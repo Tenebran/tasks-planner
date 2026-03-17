@@ -12,7 +12,11 @@ type TodolistProps = {
   changeTaskFilter: (filter: FilterType, todoListId: string) => void;
   addTask: (title: string, todoListId: string) => void;
   changeTaskStatus: (id: string, newIsDoneValue: boolean, todoListId: string) => void;
-  changeTaskTitle: (e: ChangeEvent<HTMLInputElement>, id: string, todoListId: string) => void;
+  changeTaskTitle: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: string,
+    todoListId: string,
+  ) => void;
   filter: FilterType;
   todoListId: string;
   removeTodoList: (todoListId: string) => void;
