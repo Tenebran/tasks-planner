@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from 'react';
+import React from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
 import { Button, ButtonGroup, IconButton } from '@mui/material';
