@@ -141,23 +141,25 @@ function App() {
         <Grid container sx={{ p: '10px 0' }}>
           <AddItemForm addItem={addTodolist} />
         </Grid>
-        <Grid container>
+        <Grid container spacing={3}>
           {todoLists.map((t) => (
-            <Paper elevation={3} sx={{ p: '20px' }}>
-              <Todolist
-                key={t.id}
-                title={t.title}
-                tasks={filteredTasks[t.id]}
-                removeTask={removeTask}
-                changeTaskFilter={changeTaskFilter}
-                addTask={addTask}
-                changeTaskStatus={changeTaskStatus}
-                changeTaskTitle={changeTaskTitle}
-                filter={t.filter}
-                todoListId={t.id}
-                removeTodoList={removeTodoList}
-              />
-            </Paper>
+            <Grid>
+              <Paper elevation={3} sx={{ p: '20px' }}>
+                <Todolist
+                  key={t.id}
+                  title={t.title}
+                  tasks={filteredTasks[t.id]}
+                  removeTask={removeTask}
+                  changeTaskFilter={changeTaskFilter}
+                  addTask={addTask}
+                  changeTaskStatus={changeTaskStatus}
+                  changeTaskTitle={changeTaskTitle}
+                  filter={t.filter}
+                  todoListId={t.id}
+                  removeTodoList={removeTodoList}
+                />
+              </Paper>
+            </Grid>
           ))}
         </Grid>
       </Container>

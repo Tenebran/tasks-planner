@@ -51,12 +51,7 @@ export const AddItemForm: React.FC<AddItemForm> = ({ todoListId, addItem }) => {
           error={newItemTitle.length >= 15 || inputError}
           helperText={userMessage}
         />
-        {/* <input
-          className={inputError ? 'input_error' : ''}
-          value={newItemTitle}
-          onChange={onChangeSetNewTaskTitle}
-          onKeyDown={onInputKeyDown}
-        /> */}
+
         <Button
           onClick={addItemHandler}
           disabled={isAddBtnDisabled}
@@ -67,7 +62,6 @@ export const AddItemForm: React.FC<AddItemForm> = ({ todoListId, addItem }) => {
           endIcon={<AddBoxIcon />}>
           Add
         </Button>
-        {/* <span className={'input_message'}>{userMessage}</span> */}
       </div>
     </>
   );

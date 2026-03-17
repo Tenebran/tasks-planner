@@ -52,12 +52,6 @@ export const Task: React.FC<TaskPropsType> = ({
           value={title}
           onChange={(e) => changeTaskTitle(e, id, todoListId)}
         />
-        // <input
-        //   autoFocus
-        //   onBlur={() => setOpen(false)}
-        //   value={title}
-        //   onChange={(e) => changeTaskTitle(e, id, todoListId)}
-        // />
       )}
     </li>
   );
