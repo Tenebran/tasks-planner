@@ -64,7 +64,7 @@ export const Todolist: React.FC<TodolistProps> = ({
         )}
       </ul>
       <div>
-        <ButtonGroup variant="contained" size={'small'} disableElevation>
+        <ButtonGroup variant="contained" size={'small'} disableElevation fullWidth>
           <Button
             color={filter === 'all' ? 'secondary' : 'primary'}
             sx={{ mr: '2px' }}
