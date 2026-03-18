@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { FilterType, TaskType } from './App';
 import { Task } from './Task';
-import { Button, ButtonGroup, IconButton } from '@mui/material';
+import { Button, ButtonGroup, IconButton, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AddItemForm } from './AddItemForm';
 
@@ -20,6 +20,10 @@ type TodolistProps = {
   filter: FilterType;
   todoListId: string;
   removeTodoList: (todoListId: string) => void;
+  changeTodolistTitle: (
+    todolistId: string,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
 };
 
 export const Todolist: React.FC<TodolistProps> = ({
@@ -33,14 +37,29 @@ export const Todolist: React.FC<TodolistProps> = ({
   filter,
   todoListId,
   removeTodoList,
+  changeTodolistTitle,
 }) => {
+  const [open, setOpen] = useState<boolean>(false);
+
   return (
     <div className="todolist">
       <div className="todolist-header">
-        <h3>{title}</h3>
-        <IconButton aria-label="delete" onClick={() => removeTodoList(todoListId)}>
-          <DeleteIcon color={'error'} />
-        </IconButton>
+        {!open ? (
+          <>
+            <h3 onDoubleClick={() => setOpen(true)}> {title}</h3>
+            <IconButton aria-label="delete" onClick={() => removeTodoList(todoListId)}>
+              <DeleteIcon color={'error'} />
+            </IconButton>
+          </>
+        ) : (
+          <TextField
+            autoFocus
+            onBlur={() => setOpen(false)}
+            value={title}
+            sx={{ mb: '10px' }}
+            onChange={(e) => changeTodolistTitle(todoListId, e)}
+          />
+        )}
       </div>
       <AddItemForm todoListId={todoListId} addItem={addTask} />
       <ul>

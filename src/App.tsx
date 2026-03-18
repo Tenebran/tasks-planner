@@ -122,6 +122,14 @@ function App() {
     setTodoLists([...todoLists, { id: todolistId, title, filter: 'all' }]);
     setTasks({ ...tasks, [todolistId]: [] });
   };
+  const changeTodolistTitle = (
+    todolistId: string,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setTodoLists(
+      todoLists.map((t) => (t.id === todolistId ? { ...t, title: e.currentTarget.value } : t)),
+    );
+  };
 
   return (
     <div className="App">
@@ -157,6 +165,7 @@ function App() {
                   filter={t.filter}
                   todoListId={t.id}
                   removeTodoList={removeTodoList}
+                  changeTodolistTitle={changeTodolistTitle}
                 />
               </Paper>
             </Grid>
