@@ -1,11 +1,10 @@
-import { v1 } from 'uuid';
-import type { TodoListType } from '../App';
 import { todolistsReducer } from './todolists-reducer';
+import type { TodoListType } from '../App';
 
 test('correct todolist should be removed', () => {
   //
-  const todolistId1 = v1();
-  const todolistId2 = v1();
+  const todolistId1 = 'todolistId1';
+  const todolistId2 = 'todolistId2';
 
   const startState: Array<TodoListType> = [
     { id: todolistId1, title: 'What to learn', filter: 'all' },
@@ -13,7 +12,10 @@ test('correct todolist should be removed', () => {
   ];
   //
 
-  const endState = todolistsReducer(startState);
+  const endState = todolistsReducer(startState, {
+    type: 'REMOVE-TODOLIST',
+    id: todolistId1,
+  });
 
   //
   expect(endState.length).toBe(1);
