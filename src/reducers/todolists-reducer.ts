@@ -1,4 +1,4 @@
-import type { TodoListType } from '../App';
+import type { FilterType, TodoListType } from '../App';
 
 export type RemoveTodolistAT = {
   type: 'REMOVE-TODOLIST';
@@ -15,7 +15,17 @@ export type ChangeTodolistTtitle = {
   title: string;
 };
 
-export type ActionType = RemoveTodolistAT | AddTodolistAT | ChangeTodolistTtitle;
+export type ChangeTodolistFilter = {
+  type: 'CHANGE-TODOLIST-FILTER';
+  id: string;
+  filter: FilterType;
+};
+
+export type ActionType =
+  | RemoveTodolistAT
+  | AddTodolistAT
+  | ChangeTodolistTtitle
+  | ChangeTodolistFilter;
 
 export const todolistsReducer = (todolists: TodoListType[], action: ActionType): TodoListType[] => {
   switch (action.type) {
@@ -25,6 +35,8 @@ export const todolistsReducer = (todolists: TodoListType[], action: ActionType):
       return [...todolists, { id: crypto.randomUUID(), title: action.title, filter: 'all' }];
     case 'CHANGE-TODOLIST-TITLE':
       return todolists.map((t) => (t.id === action.id ? { ...t, title: action.title } : t));
+    case 'CHANGE-TODOLIST-FILTER':
+      return todolists.map((t) => (t.id === action.id ? { ...t, filter: action.filter } : t));
     default:
       return todolists;
   }
