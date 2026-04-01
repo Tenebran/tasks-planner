@@ -8,18 +8,23 @@ export type RemoveTodolistAT = {
 export type AddTodolistAT = {
   type: 'ADD-TODOLIST';
   title: string;
+};
+export type ChangeTodolistTtitle = {
+  type: 'CHANGE-TODOLIST-TITLE';
   id: string;
+  title: string;
 };
 
-export const todolistsReducer = (
-  todolists: TodoListType[],
-  action: RemoveTodolistAT | AddTodolistAT,
-): TodoListType[] => {
+export type ActionType = RemoveTodolistAT | AddTodolistAT | ChangeTodolistTtitle;
+
+export const todolistsReducer = (todolists: TodoListType[], action: ActionType): TodoListType[] => {
   switch (action.type) {
     case 'REMOVE-TODOLIST':
       return todolists.filter((t) => t.id !== action.id);
     case 'ADD-TODOLIST':
-      return [...todolists, { id: action.id, title: action.title, filter: 'all' }];
+      return [...todolists, { id: crypto.randomUUID(), title: action.title, filter: 'all' }];
+    case 'CHANGE-TODOLIST-TITLE':
+      return todolists.map((t) => (t.id === action.id ? { ...t, title: action.title } : t));
     default:
       return todolists;
   }
