@@ -9,13 +9,13 @@ export type AddTodolistAT = {
   type: 'ADD-TODOLIST';
   title: string;
 };
-export type ChangeTodolistTtitle = {
+export type ChangeTodolistTtitleAT = {
   type: 'CHANGE-TODOLIST-TITLE';
   id: string;
   title: string;
 };
 
-export type ChangeTodolistFilter = {
+export type ChangeTodolistFilterAT = {
   type: 'CHANGE-TODOLIST-FILTER';
   id: string;
   filter: FilterType;
@@ -24,8 +24,8 @@ export type ChangeTodolistFilter = {
 export type ActionType =
   | RemoveTodolistAT
   | AddTodolistAT
-  | ChangeTodolistTtitle
-  | ChangeTodolistFilter;
+  | ChangeTodolistTtitleAT
+  | ChangeTodolistFilterAT;
 
 export const todolistsReducer = (todolists: TodoListType[], action: ActionType): TodoListType[] => {
   switch (action.type) {
@@ -40,4 +40,34 @@ export const todolistsReducer = (todolists: TodoListType[], action: ActionType):
     default:
       return todolists;
   }
+};
+
+export const RemoveTodolistAC = (id: string): RemoveTodolistAT => {
+  return {
+    type: 'REMOVE-TODOLIST',
+    id: id,
+  };
+};
+
+export const AddTodolistAC = (title: string): AddTodolistAT => {
+  return {
+    type: 'ADD-TODOLIST',
+    title,
+  };
+};
+
+export const ChangeTodolistTtitleAC = (id: string, title: string): ChangeTodolistTtitleAT => {
+  return {
+    type: 'CHANGE-TODOLIST-TITLE',
+    id,
+    title,
+  };
+};
+
+export const ChangeTodolistFilter = (id: string, filter: FilterType): ChangeTodolistFilterAT => {
+  return {
+    type: 'CHANGE-TODOLIST-FILTER',
+    id,
+    filter,
+  };
 };
